@@ -42,6 +42,10 @@ export default class NamespacedKey {
         return this.namespace + ":" + this.key;
     }
 
+    public equals(namespacedKey: NamespacedKey) {
+        return this.namespace === namespacedKey.namespace && this.key === namespacedKey.key;
+    }
+
     /**
      * Get a NamespacedKey from the supplied string with a default namespace if
      * a namespace is not defined. This is a utility method meant to fetch a

@@ -27,7 +27,11 @@ export default class SimpleRegistry <T extends Keyed> extends Registry<T> {
     }
 
     public get(key: NamespacedKey): T | undefined {
-        return this.map.get(key);
+        for (const [mapKey, value] of this.map) {
+            if (mapKey.equals(key) === true)
+                return value;
+        }
+        return undefined;
     }
 
     public forEach(callbackfn: (value: T, key: NamespacedKey, self: this) => void): void {
