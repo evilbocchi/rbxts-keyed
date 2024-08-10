@@ -9,7 +9,7 @@ export default class SimpleRegistry <T extends Keyed> extends Registry<T> {
     readonly registryType: T;
     readonly map: Map<NamespacedKey, T>;
 
-    constructor(registryType: T) {
+    constructor(registryType: T, defaultNamespace?: string) {
         super();
         const built = new Map<NamespacedKey, T>();
         const mainClass = ((registryType as unknown) as Indexable).__index; // ahahahaha
@@ -17,7 +17,7 @@ export default class SimpleRegistry <T extends Keyed> extends Registry<T> {
             if (typeOf(value) === "table" && (value as Indexable).__index === mainClass) { // cheap hack to get around instanceof limitations
                 if ((value as T)["getKey"] === undefined)
                     continue;
-                const finalKey = (value as T).getKey() ?? key; // if no key found for getKey then just use the variable's name
+                const finalKey = (value as T).getKey() ?? new NamespacedKey(defaultNamespace ?? NamespacedKey.DEFAULT, key as string); // if no key found for getKey then just use the variable's name
                 built.set(finalKey, value as T);
             }
         }
