@@ -15,7 +15,11 @@ export default class SimpleRegistry <T extends Keyed> extends Registry<T> {
         const mainClass = ((registryType as unknown) as Indexable).__index; // ahahahaha
         for (const [_key, value] of pairs(mainClass as T)) {
             if (typeOf(value) === "table" && (value as Indexable).__index === mainClass) { // cheap hack to get around instanceof limitations
-                built.set((value as T).getKey(), value as T);
+                if ((value as T)["getKey"] === undefined)
+                    continue;
+                const key = (value as T).getKey();
+                if (key !== undefined)
+                    built.set(key, value as T);
             }
         }
 
