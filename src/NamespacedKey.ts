@@ -1,4 +1,4 @@
-class NamespacedKey {
+export default class NamespacedKey {
     
     /**
      * The namespace representing all inbuilt keys.
@@ -81,5 +81,3 @@ class NamespacedKey {
         return new NamespacedKey(namespace, key);
     }
 }
-
-export = NamespacedKey;

@@ -1,7 +1,5 @@
 import NamespacedKey from "./NamespacedKey";
 
-interface Keyed {
+export default interface Keyed {
     getKey(): NamespacedKey;
 }
-
-export = Keyed;
