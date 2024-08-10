@@ -17,7 +17,8 @@ export default class SimpleRegistry <T extends Keyed> extends Registry<T> {
             if (typeOf(value) === "table" && (value as Indexable).__index === mainClass) { // cheap hack to get around instanceof limitations
                 if ((value as T)["getKey"] === undefined)
                     continue;
-                built.set((value as T).getKey() ?? key, value as T); // if no key found for getKey then just use the variable's name
+                const finalKey = (value as T).getKey() ?? key; // if no key found for getKey then just use the variable's name
+                built.set(finalKey, value as T);
             }
         }
 
